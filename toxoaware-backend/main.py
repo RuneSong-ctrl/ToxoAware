@@ -61,4 +61,4 @@ async def scan_meat(image: UploadFile = File(...)):
 
 @app.post("/api/chat")
 async def chat_buddy(request: ChatRequest):
-    return {"reply": f"Ini adalah jawaban dari ToxoBuddy untuk: {request.message}"}
+    return {"reply": f"Ini adalah jawaban dari ToxoBuddy untuk: {request.message}"};
