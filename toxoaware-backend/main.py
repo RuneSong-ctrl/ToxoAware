@@ -1,9 +1,25 @@
 import io
+import google.generativeai as genai
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from PIL import Image
 from ultralytics import YOLO
+
+GOOGLE_API_KEY = "API KEY DISINI YAAA"
+genai.configure(api_key=GOOGLE_API_KEY)
+
+generation_config = {
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 1024,
+}
+model_ai = genai.GenerativeModel(
+    model_name="gemini-2.5-flash",
+    generation_config=generation_config,
+    system_instruction="Kamu adalah ToxoBuddy, asisten AI medis yang ramah, empatik, dan ahli dalam penyakit Toksoplasmosis. Tugasmu adalah memberikan edukasi, menjawab pertanyaan seputar pencegahan, penularan (kucing, makanan mentah, tanah), dan dampaknya pada ibu hamil. Gunakan bahasa Indonesia yang mudah dipahami, jangan terlalu kaku. Jika ditanya di luar topik medis atau toksoplasmosis, tolak dengan sopan dan arahkan kembali ke topik kesehatan."
+)
 
 app = FastAPI(title="ToxoAware API")
 
@@ -61,4 +77,8 @@ async def scan_meat(image: UploadFile = File(...)):
 
 @app.post("/api/chat")
 async def chat_buddy(request: ChatRequest):
-    return {"reply": f"Ini adalah jawaban dari ToxoBuddy untuk: {request.message}"};
+    try:
+        response = model_ai.generate_content(request.message)
+        return {"reply": response.text}
+    except Exception as e:
+        return {"reply": "Maaf, ToxoBuddy sedang mengalami gangguan koneksi. Coba lagi sebentar ya!"}
