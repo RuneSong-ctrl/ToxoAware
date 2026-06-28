@@ -65,12 +65,19 @@ async def scan_meat(image: UploadFile = File(...)):
             confidence = float(best_box.conf[0].item())
             doneness = result.names[class_id]
 
-        if doneness.lower() == "well done":
-            safe_to_eat = True
+        # 2. Blokir hasil confidence level di bawah 5% (0.05) yang pasti bukan daging sapi
+        if confidence < 0.05:
+            doneness = "BUKAN DAGING SAPI / TIDAK TERDETEKSI"
+            safe_to_eat = False
+        else:
+            # 1. Mengubah deskripsi tingkat kematangan "well done"
+            if doneness.lower() == "well done":
+                doneness = "Matang sempurna, sudah siap dikonsumsi!"
+                safe_to_eat = True
 
     return {
         "status": "success",
-        "doneness": doneness.upper(),
+        "doneness": doneness.upper() if "!" not in doneness else doneness,
         "confidence": round(confidence * 100, 2),
         "safe_to_eat": safe_to_eat
     }
