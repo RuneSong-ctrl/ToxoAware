@@ -5,6 +5,8 @@ import {
   Lightbulb,
   BookOpen,
   Sparkles,
+  ExternalLink,
+  FileText,
 } from "lucide-react";
 
 const mitosFaktaData = [
@@ -50,6 +52,42 @@ const funFactsData = [
     title: "1/3 Penduduk Bumi Terinfeksi",
     description:
       "Data WHO menunjukkan bahwa sepertiga populasi dunia memiliki antibodi anti-Toxoplasma, tetapi kebanyakan tidak menunjukkan gejala sama sekali.",
+  },
+];
+
+const beritaJurnalData = [
+  {
+    title:
+      "FK-KMK UGM Ungkap Prevalensi Tinggi Toksoplasma gondii di Indonesia Melalui Meta-Analisis",
+    url: "https://fkkmk.ugm.ac.id/fk-kmk-ugm-ungkap-prevalensi-tinggi-toksoplasma-gondii-di-indonesia-melalui-meta-analisis/",
+    source: "FK-KMK UGM",
+  },
+  {
+    title:
+      "Impact of education on knowledge, attitudes, and practices for gestational toxoplasmosis",
+    url: "https://www.sciencedirect.com/science/article/pii/S1876034124002508",
+    source: "ScienceDirect",
+  },
+  {
+    title:
+      "EDUKASI INFEKSI TOKSOPLASMOSIS PADA MASYARAKAT DI DESA BALONG PANGGANG GRESIK",
+    url: "https://journal.um-surabaya.ac.id/HMN/article/view/14360",
+    source: "UM Surabaya",
+  },
+  {
+    title: "Ilmuwan Temukan Mekanisme Parasit Toksoplasma Masuki Tubuh",
+    url: "https://www.kompas.id/artikel/ilmuwan-temukan-mekanisme-parasit-toksoplasma-masuki-tubuh",
+    source: "Kompas",
+  },
+  {
+    title: "Mitos atau Fakta Bulu Kucing Penyebab Toxso",
+    url: "https://keslan.kemkes.go.id/view_artikel/1769/mitos-atau-fakta-bulu-kucing-penyebab-toxso",
+    source: "Kemenkes Keslan",
+  },
+  {
+    title: "Waspada Toksoplasma Menyerang Ibu Hamil",
+    url: "https://malangkota.go.id/2024/02/28/waspada-toksoplasma-menyerang-ibu-hamil/",
+    source: "Malang Kota",
   },
 ];
 
@@ -158,6 +196,41 @@ export default function Edukasi() {
                 {fact.description}
               </p>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-6 pt-8">
+        <div className="flex items-center gap-4 border-b-4 border-black pb-4">
+          <div className="w-12 h-12 bg-[#23A094] border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <FileText size={28} className="text-white" strokeWidth={3} />
+          </div>
+          <h3 className="text-3xl font-black text-black uppercase">
+            Berita & Jurnal Terkait
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {beritaJurnalData.map((item, index) => (
+            <a
+              key={index}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase bg-[#FFC900] border-2 border-black px-2 py-0.5 inline-block mb-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  {item.source}
+                </span>
+                <h4 className="text-black font-black text-lg md:text-xl uppercase tracking-tight leading-tight group-hover:text-[#23A094] transition-colors">
+                  {item.title}
+                </h4>
+              </div>
+              <div className="flex items-center justify-between font-black uppercase text-xs border-t-4 border-black pt-4 mt-6 text-black group-hover:text-[#23A094] transition-colors">
+                BUKA ARTIKEL <ExternalLink size={18} strokeWidth={3} />
+              </div>
+            </a>
           ))}
         </div>
       </div>

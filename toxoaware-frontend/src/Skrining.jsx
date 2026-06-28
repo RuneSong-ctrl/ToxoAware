@@ -107,14 +107,14 @@ export default function Skrining() {
   };
 
   const getResultDetails = () => {
-    if (score <= 6) {
+    if (score <= 13) {
       return {
         level: "Rendah",
         message: "Risiko rendah. Pertahankan kebersihan dan pola hidup sehat.",
         color: "bg-[#23A094]",
         icon: <CheckCircle2 size={48} strokeWidth={3} className="text-white" />,
       };
-    } else if (score <= 12) {
+    } else if (score <= 26) {
       return {
         level: "Sedang",
         message:
@@ -211,7 +211,7 @@ export default function Skrining() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#C4A1FF] rounded-full blur-[100px] pointer-events-none opacity-50"></div>
 
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white border-2 border-black text-sm font-black uppercase mb-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <Stethoscope size={18} strokeWidth={3} /> PROFIL SKRINING (OPSIONAL)
+            <Stethoscope size={18} strokeWidth={3} /> PROFIL SKRINING
           </div>
 
           <h2 className="text-4xl font-black text-black mb-4 uppercase tracking-tight">

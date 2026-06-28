@@ -136,7 +136,7 @@ export default function Scanner() {
         )}
 
         {result && (
-          <div className="absolute inset-0 z-30 flex items-center justify-center p-4 md:p-6 animate-in fade-in zoom-in duration-300 backdrop-blur-sm bg-black/40 overflow-y-auto">
+          <div className="absolute inset-0 z-30 flex items-center justify-center p-4 md:p-6 animate-in fade-in zoom-in duration-300 backdrop-blur-sm bg-black/40 overflow-y-auto pb-32">
             <div
               className={`w-full max-w-sm border-2 md:border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] my-auto ${result.safe_to_eat ? "bg-[#23A094]" : "bg-[#FF90E8]"}`}
             >
@@ -166,7 +166,7 @@ export default function Scanner() {
                 </h2>
                 <p className="text-center font-bold text-xs md:text-sm text-black uppercase border-t-2 md:border-t-4 border-black pt-2">
                   {result.safe_to_eat
-                    ? "Aman dan siap untuk anda konsumsi!"
+                    ? "Matang sempurna, sudah siap dikonsumsi!"
                     : "Belum aman! Masak lebih matang."}
                 </p>
               </div>
@@ -217,7 +217,7 @@ export default function Scanner() {
           <button
             onClick={() => fileInputRef.current.click()}
             disabled={isScanning}
-            className="w-14 h-14 md:w-16 md:h-16 bg-[#C4A1FF] border-2 md:border-4 border-black flex items-center justify-center text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 md:active:translate-x-1 md:active:translate-y-1 transition-all disabled:opacity-50"
+            className="w-14 h-14 md:w-16 md:h-16 bg-[#C4A1FF] border-2 md:border-4 border-black flex items-center justify-center text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 md:active:translate-x-1 md:active:translate-y-1 transition-all disabled:opacity-50 relative z-30"
           >
             <ImageIcon size={24} strokeWidth={3} className="md:w-7 md:h-7" />
           </button>
@@ -225,7 +225,7 @@ export default function Scanner() {
           <button
             onClick={capture}
             disabled={isScanning}
-            className="w-20 h-20 md:w-24 md:h-24 bg-[#FF90E8] border-2 md:border-4 border-black flex items-center justify-center text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 md:active:translate-x-2 md:active:translate-y-2 transition-all disabled:opacity-50"
+            className="w-20 h-20 md:w-24 md:h-24 bg-[#FF90E8] border-2 md:border-4 border-black flex items-center justify-center text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 md:active:translate-x-2 md:active:translate-y-2 transition-all disabled:opacity-50 relative z-30"
           >
             {isScanning ? (
               <Loader2
