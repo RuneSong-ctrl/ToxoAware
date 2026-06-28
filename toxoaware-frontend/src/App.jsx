@@ -166,7 +166,6 @@ const DesktopSidebar = ({ location }) => {
           </div>
         </div>
       </div>
-
       <nav className="flex flex-col flex-1 p-6 gap-4 overflow-y-auto">
         <div className="text-sm font-black uppercase border-b-4 border-black pb-2 mb-2">
           Menu Utama
@@ -177,7 +176,8 @@ const DesktopSidebar = ({ location }) => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-4 px-4 py-4 border-4 border-black transition-all font-black text-lg uppercase ${isActive ? "bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] translate-x-1" : "bg-transparent hover:bg-white/50 hover:translate-x-1"}`}
+              className={`flex items-center gap-4 px-4 py-4 border-4 border-black transition-all 
+font-black text-lg uppercase ${isActive ? "bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] translate-x-1" : "bg-transparent hover:bg-white/50 hover:translate-x-1"}`}
             >
               <item.icon size={24} strokeWidth={3} />
               <span>{item.label}</span>
@@ -195,122 +195,17 @@ const DesktopSidebar = ({ location }) => {
 export default function App() {
   const location = useLocation();
 
-  return (
-    <div className="min-h-screen md:h-screen w-full bg-[#f4f4f0] font-sans text-black flex flex-col md:flex-row overflow-hidden selection:bg-black selection:text-white">
-      <DesktopSidebar location={location} />
+  // =====================================================================
+  // FUNGSI PENCEGAT OTOMATIS UNTUK MEMENUHI POIN 1 & POIN 2 DI FRONTEND
+  // =====================================================================
+  const handleDataFormat = (rawResponse) => {
+    if (!rawResponse) return rawResponse;
 
-      <main className="flex-1 flex flex-col h-full overflow-hidden relative">
-        <header className="md:hidden sticky top-0 z-40 bg-[#FF90E8] border-b-4 border-black p-4 shadow-[0px_4px_0px_0px_rgba(0,0,0,1)]">
-          <div className="flex justify-center items-center">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-black flex items-center justify-center border-2 border-white text-white font-black text-xl shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]">
-                T
-              </div>
-              <div>
-                <h1 className="text-xl font-black uppercase leading-none">
-                  ToxoAware
-                </h1>
-                <p className="text-[10px] font-bold uppercase bg-white border-2 border-black px-1.5 inline-block mt-1">
-                  Edukasi & Skrining
-                </p>
-              </div>
-            </div>
-          </div>
-        </header>
+    const confidenceValue = rawResponse.confidence || 0;
+    const currentDoneness = rawResponse.doneness || "UNKNOWN";
 
-        <header className="hidden md:flex justify-between items-end px-12 pt-12 pb-8 shrink-0 bg-[#f4f4f0] border-b-4 border-black z-10 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"></div>
-          <div className="relative z-10">
-            <p className="text-sm font-black mb-2 uppercase border-2 border-black px-3 py-1 bg-white inline-block shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              OVERVIEW
-            </p>
-            <h1 className="text-5xl font-black uppercase tracking-tight">
-              {location.pathname === "/"
-                ? "DASHBOARD UTAMA"
-                : location.pathname === "/skrining"
-                  ? "FORMULIR SKRINING"
-                  : location.pathname === "/toxobuddy"
-                    ? "TOXOBUDDY AI"
-                    : location.pathname === "/edukasi"
-                      ? "PUSAT EDUKASI"
-                      : location.pathname === "/scanner"
-                        ? "KAMERA AI VISION"
-                        : "FASILITAS KESEHATAN"}
-            </h1>
-          </div>
-          <div className="flex gap-4 relative z-10">
-            <div className="bg-[#FFC900] px-6 py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm font-black uppercase flex items-center gap-2">
-              <MapPin size={20} strokeWidth={3} />
-              DENPASAR, BALI
-            </div>
-          </div>
-        </header>
+    // Poin 2: Blokir hasil tebakan jika tingkat kepastian di bawah 5%
+    if (confidenceValue < 5) {
+      return {
+        ...rawResponse,
 
-        <div className="flex-1 overflow-y-auto px-6 py-8 md:px-12 md:py-10 hide-scrollbar bg-[#f4f4f0] relative">
-          <div className="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none z-0"></div>
-          <div className="relative z-10 h-full">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/scanner" element={<Scanner />} />
-              <Route path="/skrining" element={<Skrining />} />
-              <Route path="/toxobuddy" element={<ToxoBuddy />} />
-              <Route path="/edukasi" element={<Edukasi />} />
-              <Route path="/fasilitas" element={<Fasilitas />} />
-            </Routes>
-          </div>
-        </div>
-      </main>
-
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 pointer-events-none pb-4 px-4">
-        <div className="relative pointer-events-auto bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-2 flex justify-between items-center">
-          <Link
-            to="/"
-            className={`flex flex-col items-center p-3 border-2 border-transparent transition-all ${location.pathname === "/" ? "bg-[#FFC900] border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" : "hover:bg-slate-100"}`}
-          >
-            <LayoutDashboard
-              size={24}
-              strokeWidth={location.pathname === "/" ? 3 : 2}
-            />
-          </Link>
-          <Link
-            to="/skrining"
-            className={`flex flex-col items-center p-3 border-2 border-transparent transition-all ${location.pathname === "/skrining" ? "bg-[#23A094] text-white border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" : "hover:bg-slate-100"}`}
-          >
-            <Stethoscope
-              size={24}
-              strokeWidth={location.pathname === "/skrining" ? 3 : 2}
-            />
-          </Link>
-
-          <div className="relative -top-8 px-2">
-            <Link
-              to="/scanner"
-              className="w-16 h-16 bg-[#FF90E8] border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-1 transition-all"
-            >
-              <Camera size={28} strokeWidth={3} />
-            </Link>
-          </div>
-
-          <Link
-            to="/edukasi"
-            className={`flex flex-col items-center p-3 border-2 border-transparent transition-all ${location.pathname === "/edukasi" ? "bg-[#C4A1FF] border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" : "hover:bg-slate-100"}`}
-          >
-            <BookOpen
-              size={24}
-              strokeWidth={location.pathname === "/edukasi" ? 3 : 2}
-            />
-          </Link>
-          <Link
-            to="/toxobuddy"
-            className={`flex flex-col items-center p-3 border-2 border-transparent transition-all ${location.pathname === "/toxobuddy" ? "bg-[#FFC900] border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" : "hover:bg-slate-100"}`}
-          >
-            <MessageSquare
-              size={24}
-              strokeWidth={location.pathname === "/toxobuddy" ? 3 : 2}
-            />
-          </Link>
-        </div>
-      </nav>
-    </div>
-  );
-}
